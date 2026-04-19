@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH --account=<your-allocation>
+#SBATCH -t 0-20:00
+#SBATCH --cpus-per-task=4
+#SBATCH --mem-per-cpu=64G
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=<your-email>
+
+module load StdEnv/2023 java/21.0.1 gatk/4.6.1.0 bwa/0.7.18 samtools/1.20 nextflow/24.04.4 htslib/1.19
+
+nextflow run main.nf -resume \
+    --bams "data/read_group/*.bam" \
+    --ref  "ref/MPB_reference.fna" \
+    --outdir "results"
